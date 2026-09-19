@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AI 打工人鉴定所：测测你最该把哪件事交给 AI。" />
+  <title>AI 打工人鉴定所</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23121722'/%3E%3Cpath d='M18 31h28M32 17v28' stroke='%23d6ff4f' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <style>
+    :root { --ink:#121722; --paper:#f6f5ef; --acid:#d6ff4f; --coral:#ff6b58; --muted:#697080; }
+    * { box-sizing:border-box; } body { margin:0; min-height:100vh; color:var(--ink); background:var(--paper); font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif; }
+    .grain { position:fixed; inset:0; pointer-events:none; opacity:.24; background-image:radial-gradient(#121722 0.6px,transparent .6px); background-size:7px 7px; mix-blend-mode:multiply; }
+    main { position:relative; max-width:820px; padding:28px 22px 56px; margin:0 auto; }
+    .topline { display:flex; justify-content:space-between; align-items:center; gap:12px; font-size:.86rem; font-weight:800; letter-spacing:.04em; }
+    .stamp { border:2px solid var(--ink); border-radius:999px; padding:6px 10px; background:var(--acid); }
+    .hero { padding:64px 0 38px; } h1 { max-width:700px; margin:0; font-size:clamp(3rem,10vw,6.7rem); line-height:.89; letter-spacing:-.075em; }
+    h1 em { color:var(--coral); font-style:normal; } .lead { max-width:490px; margin:26px 0 0; font-size:1.1rem; line-height:1.75; color:#363c4a; }
+    .rule { height:3px; background:var(--ink); margin:20px 0 28px; }.button { appearance:none; border:2px solid var(--ink); color:var(--ink); cursor:pointer; border-radius:0; padding:14px 19px; font:inherit; font-weight:900; font-size:1rem; box-shadow:5px 5px 0 var(--ink); background:var(--acid); transition:transform .15s,box-shadow .15s; }.button:hover { transform:translate(3px,3px); box-shadow:2px 2px 0 var(--ink); }.button.alt { background:#fff; }.button:focus-visible { outline:3px solid var(--coral); outline-offset:3px; }
+    .notice { margin-top:31px; display:flex; gap:12px; align-items:flex-start; font-size:.86rem; line-height:1.55; color:var(--muted); }.dot { flex:none; margin-top:5px; width:10px; height:10px; border-radius:50%; background:var(--coral); }
+    .hidden { display:none !important; }.progress { display:flex; justify-content:space-between; align-items:center; margin:35px 0 20px; font-weight:800; }.bar { height:12px; border:2px solid var(--ink); background:#fff; flex:1; margin-left:14px; }.fill { width:0; height:100%; background:var(--acid); transition:width .25s ease; }
+    .question { background:#fff; border:2px solid var(--ink); padding:clamp(22px,6vw,44px); box-shadow:9px 9px 0 var(--ink); }.eyebrow { color:var(--coral); font-size:.86rem; font-weight:900; letter-spacing:.08em; }.question h2 { margin:12px 0 27px; font-size:clamp(1.55rem,5vw,2.35rem); line-height:1.25; letter-spacing:-.04em; }
+    .answers { display:grid; gap:10px; }.answer { width:100%; text-align:left; background:var(--paper); border:2px solid var(--ink); padding:15px 16px; cursor:pointer; color:var(--ink); font:inherit; font-weight:700; line-height:1.45; }.answer:hover { background:var(--acid); }.answer:focus-visible { outline:3px solid var(--coral); outline-offset:2px; }
+    .result-card { position:relative; overflow:hidden; background:var(--ink); color:#fff; padding:clamp(24px,6vw,48px); box-shadow:9px 9px 0 var(--coral); }.result-card:after { content:""; position:absolute; width:210px; height:210px; right:-65px; top:-65px; border-radius:50%; background:var(--acid); }.result-card > * { position:relative; z-index:1; }.code { display:inline-block; color:var(--ink); background:var(--acid); padding:6px 9px; font-size:.87rem; font-weight:900; }.result-card h2 { max-width:580px; margin:19px 0 11px; font-size:clamp(2.4rem,8vw,5rem); line-height:.9; letter-spacing:-.07em; }.result-card p { max-width:520px; margin:15px 0; font-size:1.05rem; line-height:1.7; }.prescription { margin:28px 0; padding:16px; color:var(--ink); background:#fff; border-left:7px solid var(--coral); line-height:1.55; }.result-actions { display:flex; flex-wrap:wrap; gap:14px; }.result-actions .button { background:var(--acid); }.result-actions .alt { background:#fff; }
+    .footnote { margin-top:31px; font-size:.84rem; color:var(--muted); line-height:1.6; } @media (max-width:520px) { main { padding:20px 17px 42px; }.hero { padding-top:51px; }.question { box-shadow:5px 5px 0 var(--ink); }.result-card { box-shadow:5px 5px 0 var(--coral); } }
+  </style>
+</head>
+<body>
+  <div class="grain"></div>
+  <main>
+    <header class="topline"><span>NO. 001 / CAMPUS EDITION</span><span class="stamp">纯属娱乐，但请诚实</span></header>
+    <section id="intro" class="hero">
+      <h1>AI 打工人<br><em>鉴定所</em></h1>
+      <p class="lead">不是测你会不会被替代。是找出：在 AI 开始接活以后，你最该把哪件破事交给它。</p>
+      <div class="rule"></div>
+      <button id="start" class="button">开始鉴定 · 约 2 分钟</button>
+      <div class="notice"><span class="dot"></span><span>不会收集个人信息。结果仅用于帮你匹配一项适合开始的 AI 协作任务。</span></div>
+    </section>
+
+    <section id="quiz" class="hidden" aria-live="polite">
+      <div class="progress"><span id="count">01 / 08</span><div class="bar"><div id="fill" class="fill"></div></div></div>
+      <div class="question"><div id="eyebrow" class="eyebrow">判断题 01</div><h2 id="prompt"></h2><div id="answers" class="answers"></div></div>
+    </section>
+
+    <section id="result" class="hidden" aria-live="polite">
+      <div class="progress"><span>鉴定完成</span><div class="bar"><div class="fill" style="width:100%"></div></div></div>
+      <article class="result-card"><span id="code" class="code"></span><h2 id="title"></h2><p id="description"></p><div id="prescription" class="prescription"></div><div class="result-actions"><button id="share" class="button">复制我的诊断结果</button><a id="taskLink" class="button alt" href="https://dataclawhub.com/" target="_blank" rel="noopener">领取我的第一单 →</a></div></article>
+      <p class="footnote">“领取我的第一单”目前会进入 DataClawHub 首页。正式活动时，将此链接替换为团队专属邀请码链接，并让每个类型进入对应任务或制品页。</p>
+      <p><button id="again" class="button alt">再测一次</button></p>
+    </section>
+  </main>
+  <script>
+    const questions = [
+      { q:"老师说‘自由发挥’，你的第一反应是？", a:[["先建 12 个文件夹，再决定干什么","SRC"],["给 AI 一句话，要求它直接产出","FWD"],["先问清楚评分标准和验收条件","CTRL"],["先拖一会儿，最后一天火力全开","DDL"]] },
+      { q:"面对一份看似完美、但没有出处的 AI 答案，你会？", a:[["先收藏，等以后再核实","SRC"],["转发给最懂的人，请他判断","FWD"],["逐条追问证据和边界","HIL"],["先交了再说，deadline 不等人","DDL"]] },
+      { q:"朋友说：‘帮我看一下这个’，通常意味着？", a:[["把所有文件都丢给我保管","SRC"],["我会变成群里的文件中转站","FWD"],["我得把一句话需求拆成十个问题","CTRL"],["我会在凌晨两点开始拯救世界","DDL"]] },
+      { q:"如果 AI 能完成 80% 的工作，你愿意留下哪 20%？", a:[["挑选最值得做的方向","SRC"],["把大家拉到同一条线上","FWD"],["判断结果是否真的可用","HIL"],["规定什么叫‘交付完成’","CTRL"]] },
+      { q:"你电脑桌面最像什么？", a:[["资料考古现场","SRC"],["物流枢纽","FWD"],["作战指挥台","CTRL"],["灾难发生前 24 小时","DDL"]] },
+      { q:"AI 第一次交付不太行，你会？", a:[["再补十份资料给它","SRC"],["换一个工具试试","FWD"],["指出哪里错、为什么错，再让它重来","HIL"],["重新规划步骤和验收点","CTRL"]] },
+      { q:"你最常对自己说的一句话是？", a:[["这个资料以后肯定用得上","SRC"],["我发你，你看一下","FWD"],["先说清楚什么算做好","CTRL"],["我明天一定开始","DDL"]] },
+      { q:"真正拿到一项任务时，你最先想解决的是？", a:[["资料够不够","SRC"],["谁来一起做","FWD"],["怎么保证不翻车","HIL"],["什么时候必须交","DDL"]] }
+    ];
+    const types = {
+      SRC:{ code:"SRC / 资料囤积鼠", title:"资料囤积鼠", description:"你不是没有能力，只是把所有可能性都存成了“最终版_v17”。AI 最适合替你做第一轮整理，不替你做选择。", prescription:"你的第一单：挑一个闲置资料夹，让 AI 整理成一份有出处、可继续迭代的任务或制品。" },
+      FWD:{ code:"FWD / 文件转发大师", title:"文件转发大师", description:"你天生知道谁能解决问题，只是常常把自己活成了人肉消息队列。AI 可以替你搬运；你该负责让事情真正连起来。", prescription:"你的第一单：把一段混乱的群聊需求，改写成一个任何人或 Agent 都能接手的任务卡。" },
+      CTRL:{ code:"CTRL / 控制欲任务官", title:"控制欲任务官", description:"你不是难相处，你只是无法接受‘差不多交付’。这正是 AI 协作里最值钱的能力：给边界、定标准、验结果。", prescription:"你的第一单：为一个真实麻烦写下目标、输入、验收标准，让 AI 先交第一版。" },
+      DDL:{ code:"DDL / 截止日燃料", title:"截止日燃料", description:"没有 deadline 时，你在蓄力；有 deadline 时，你才是完全体。AI 不会替你焦虑，但能帮你把最后 24 小时变得可控。", prescription:"你的第一单：把一个拖延中的任务拆成 24 小时行动清单，让 AI 先完成最费时间的初稿。" },
+      HIL:{ code:"HIL / 人类最后一环", title:"人类最后一环", description:"你对‘看起来没问题’有本能警惕。AI 可以生成十版初稿，但最关键的判断仍要由你完成。", prescription:"你的第一单：拿一份 AI 输出，标记它的依据、风险与需要人类决策的最后一环。" }
+    };
+    let step=0, scores={SRC:0,FWD:0,CTRL:0,DDL:0,HIL:0};
+    const intro=document.querySelector('#intro'), quiz=document.querySelector('#quiz'), result=document.querySelector('#result');
+    function render(){ const item=questions[step]; document.querySelector('#count').textContent=String(step+1).padStart(2,'0')+' / 08'; document.querySelector('#fill').style.width=((step)/questions.length*100)+'%'; document.querySelector('#eyebrow').textContent='判断题 '+String(step+1).padStart(2,'0'); document.querySelector('#prompt').textContent=item.q; const list=document.querySelector('#answers'); list.innerHTML=''; item.a.forEach(([label,key])=>{const b=document.createElement('button');b.className='answer';b.textContent=label;b.onclick=()=>answer(key);list.appendChild(b);}); }
+    function answer(key){ scores[key]++; step++; if(step<questions.length) render(); else showResult(); }
+    function showResult(){ const type=Object.entries(scores).sort((a,b)=>b[1]-a[1])[0][0], data=types[type]; quiz.classList.add('hidden');result.classList.remove('hidden'); document.querySelector('#code').textContent=data.code; document.querySelector('#title').textContent=data.title; document.querySelector('#description').textContent=data.description; document.querySelector('#prescription').textContent=data.prescription; }
+    document.querySelector('#start').onclick=()=>{intro.classList.add('hidden');quiz.classList.remove('hidden');render();};
+    document.querySelector('#again').onclick=()=>{step=0;scores={SRC:0,FWD:0,CTRL:0,DDL:0,HIL:0};result.classList.add('hidden');intro.classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});};
+    document.querySelector('#share').onclick=async()=>{ const text='我的 AI 打工人诊断：'+document.querySelector('#code').textContent+'。'+document.querySelector('#prescription').textContent+'\n#AI打工人鉴定所'; try{await navigator.clipboard.writeText(text);document.querySelector('#share').textContent='已复制，去晒结果';setTimeout(()=>document.querySelector('#share').textContent='复制我的诊断结果',1800);}catch(e){prompt('复制这段结果：',text);} };
+  </script>
+</body>
+</html>
